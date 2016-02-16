@@ -1,0 +1,24 @@
+group 'matgm50.jrose'
+version '0.0.1'
+
+apply plugin: 'java'
+
+sourceSets.main.java.srcDirs += 'src'
+sourceSets.main.resources.srcDirs += 'res'
+
+repositories {
+
+    mavenCentral()
+    maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+
+}
+
+dependencies {
+
+    compile "org.lwjgl:lwjgl:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
+    compile "org.joml:joml:${jomlVersion}"
+
+}
