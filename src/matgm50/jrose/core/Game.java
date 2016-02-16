@@ -105,8 +105,7 @@ public class Game {
         private long windowID;
 
         private String title = "jRose Core Game";
-        private int width = 800;
-        private int height = 600;
+        private Resolution resolution = new Resolution(800, 600);
         private boolean resizable = false;
         private boolean fullscreen = false;
 
@@ -132,11 +131,12 @@ public class Game {
             glfwWindowHint(GLFW_RESIZABLE, resizable);
             glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
-            windowID = glfwCreateWindow(width, height, title, fullscreen, NULL);
+            windowID = glfwCreateWindow(resolution.getWidth(), resolution.getHeight(), title, fullscreen, NULL);
 
             GLFWVidMode monitorProps = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-            glfwSetWindowPos(windowID, (monitorProps.width() - width) / 2, (monitorProps.height() - height) / 2);
+            glfwSetWindowPos(windowID, (monitorProps.width() - resolution.getWidth()) / 2,
+                    (monitorProps.height() - resolution.getHeight()) / 2);
 
             glfwSetFramebufferSizeCallback(windowID, resizeCallback);
 
@@ -180,18 +180,18 @@ public class Game {
 
         }
 
-        public int getWidth() { return width; }
+        public int getWidth() { return resolution.getWidth(); }
 
-        public void setWidth(int width) { resize(width, height); }
+        public void setWidth(int width) { resize(width, resolution.getHeight()); }
 
-        public int getHeight() { return height; }
+        public int getHeight() { return resolution.getHeight(); }
 
-        public void setHeight(int height) { resize(width, height); }
+        public void setHeight(int height) { resize(resolution.getWidth(), height); }
 
         public void resize(int width, int height) {
 
-            this.width = width;
-            this.height = height;
+            resolution.setWidth(width);
+            resolution.setHeight(height);
 
             if (windowID != 0) {
 
@@ -206,6 +206,28 @@ public class Game {
         public void setFullscreen(boolean fullscreen) { this.fullscreen = fullscreen; }
 
         public boolean shouldClose() { return glfwWindowShouldClose(windowID) == GLFW_TRUE; }
+
+        public class Resolution {
+
+            private int width;
+            private int height;
+
+            public Resolution(int width, int height) {
+
+                this.width = width;
+                this.height = height;
+
+            }
+
+            public int getWidth() { return width; }
+
+            public void setWidth(int width) { this.width = width; }
+
+            public int getHeight() { return height; }
+
+            public void setHeight(int height) { this.height = height; }
+
+        }
 
     }
 
