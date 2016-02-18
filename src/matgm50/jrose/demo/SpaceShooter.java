@@ -2,6 +2,7 @@ package matgm50.jrose.demo;
 
 import matgm50.jrose.core.Game;
 import matgm50.jrose.core.Scene;
+import matgm50.jrose.core.display.Resolution;
 import matgm50.jrose.core.gl.Graphics;
 import matgm50.jrose.core.input.Key;
 import matgm50.jrose.core.kiss.SimpleSprite;
@@ -25,7 +26,7 @@ public class SpaceShooter extends Scene {
     public void init() {
 
         game.display.setTitle("jRose2D: Space Shooter Demo");
-        game.display.resize(600, 600);
+        game.display.switchResolution(new Resolution(600, 600));
 
         for(int i = 0; i < 5; i++) {
 

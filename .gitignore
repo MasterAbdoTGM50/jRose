@@ -14,3 +14,7 @@
 /*.iml
 /*.ipr
 /*.iws
+
+# My Stuff #
+/src/matgm50/jrose/demo
+/res/demo
