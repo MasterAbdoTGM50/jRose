@@ -1,5 +1,4 @@
 # Java Stuff #
-*.class
 *.jar
 *.war
 *.ear
@@ -11,10 +10,6 @@
 # IntelliJ Stuff #
 /.idea
 /out
-/*.iml
-/*.ipr
-/*.iws
-
-# My Stuff #
-/src/matgm50/jrose/demo
-/res/demo
+*.iml
+*.ipr
+*.iws
