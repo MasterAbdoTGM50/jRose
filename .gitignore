@@ -1,8 +1,3 @@
-# Java Stuff #
-*.jar
-*.war
-*.ear
-
 # Gradle Stuff #
 /.gradle
 /build

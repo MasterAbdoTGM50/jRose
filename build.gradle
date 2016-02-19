@@ -1,25 +1,29 @@
-group 'matgm50.jrose'
-version '0.0.1'
+group = jRoseGroupID
+version = jRoseVersion
 
 apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
 
-sourceSets.main.java.srcDirs += 'src'
-sourceSets.main.resources.srcDirs += 'res'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets.main.java.srcDirs = ["src"]
+sourceSets.main.resources.srcDirs = ["res"]
 
 repositories {
 
     mavenCentral()
-    //Use Only when wanting to use a snapshot
     //maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
 
 }
 
 dependencies {
 
-    compile "org.lwjgl:lwjgl:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
-    compile "org.joml:joml:${jomlVersion}"
+    compile "org.lwjgl:lwjgl:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-platform:$lwjglVersion:natives-windows"
+    compile "org.lwjgl:lwjgl-platform:$lwjglVersion:natives-linux"
+    compile "org.lwjgl:lwjgl-platform:$lwjglVersion:natives-osx"
+    compile "org.joml:joml:$jomlVersion"
 
 }
