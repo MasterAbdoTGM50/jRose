@@ -39,6 +39,7 @@ public class FileUtils {
     }
 
     public static String loadFileAsString(String dir) {
+
         String fileAsString = "";
 
         try {
