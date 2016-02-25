@@ -1,5 +1,6 @@
 package matgm50.jrose.core.gl;
 
+import matgm50.jrose.core.util.FileUtils;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
@@ -26,11 +27,12 @@ public class Texture extends GLResource {
 
         if(initialized) { return; }
 
+        ByteBuffer image = FileUtils.loadFileAsByteBuffer(path);
         IntBuffer w = BufferUtils.createIntBuffer(1);
         IntBuffer h = BufferUtils.createIntBuffer(1);
         IntBuffer c = BufferUtils.createIntBuffer(1);
 
-        ByteBuffer buffer = STBImage.stbi_load(path, w, h, c, 4);
+        ByteBuffer buffer = STBImage.stbi_load_from_memory(image, w, h, c, 4);
 
         width = w.get();
         height = h.get();
