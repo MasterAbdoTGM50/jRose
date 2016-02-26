@@ -11,6 +11,14 @@ targetCompatibility = 1.8
 sourceSets.main.java.srcDirs = ["src"]
 sourceSets.main.resources.srcDirs = ["res"]
 
+jar {
+
+    exclude ("matgm50/jrose/demo/**")
+
+    exclude ("demo/**")
+
+}
+
 repositories {
 
     mavenCentral()

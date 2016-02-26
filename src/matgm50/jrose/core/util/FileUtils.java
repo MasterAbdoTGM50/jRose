@@ -44,8 +44,8 @@ public class FileUtils {
 
         try {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getResource(dir)));
             String line;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(getResource(dir)));
 
             while ((line = reader.readLine()) != null) {
 
@@ -63,7 +63,17 @@ public class FileUtils {
 
     public static InputStream getResource(String dir) {
 
-        return Thread.currentThread().getContextClassLoader().getResourceAsStream(dir);
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+        if(loader.getResource("/" + dir) != null) {
+
+            return loader.getResourceAsStream("/" + dir);
+
+        } else {
+
+            return loader.getResourceAsStream(dir);
+
+        }
 
     }
 
