@@ -33,6 +33,9 @@ public class Graphics extends Resource {
         GL11.glViewport(0, 0, width, height);
         proMat.setOrtho2D(0, width, 0, height);
 
+        Shaders.base2D.bind();
+        Shaders.base2D.setProjectionMatrix(proMat);
+
     }
 
     @Override

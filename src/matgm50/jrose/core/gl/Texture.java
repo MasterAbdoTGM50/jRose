@@ -13,12 +13,12 @@ public class Texture extends GLResource {
 
     private int textureID;
 
-    private final String path;
+    private final String dir;
     private int width, height;
 
-    public Texture(String path) {
+    public Texture(String dir) {
 
-        this.path = path;
+        this.dir = dir;
 
     }
 
@@ -27,7 +27,7 @@ public class Texture extends GLResource {
 
         if(initialized) { return; }
 
-        ByteBuffer image = FileUtils.loadFileAsByteBuffer(path);
+        ByteBuffer image = FileUtils.loadFileAsByteBuffer(dir);
         IntBuffer w = BufferUtils.createIntBuffer(1);
         IntBuffer h = BufferUtils.createIntBuffer(1);
         IntBuffer c = BufferUtils.createIntBuffer(1);

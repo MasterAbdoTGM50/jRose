@@ -7,18 +7,17 @@ import matgm50.jrose.core.gl.mesh.Rect;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
-public class SimpleSprite {
+public class Entity {
 
     Rect rect;
     Texture tex;
     Matrix4f modMat = new Matrix4f();
-    Matrix4f mvpMat = new Matrix4f();
 
     public int width, height;
     public Color color = Graphics.Colors.WHITE;
     public Vector2f pos = new Vector2f();
 
-    public SimpleSprite(String textureDir, int width, int height) {
+    public Entity(String textureDir, int width, int height) {
 
         this.width = width;
         this.height = height;
@@ -37,9 +36,8 @@ public class SimpleSprite {
 
         modMat.setTranslation(pos.x, pos.y, 0);
 
-        Graphics.proMat.mul(modMat, mvpMat);
         Graphics.Shaders.base2D.setColor(color);
-        Graphics.Shaders.base2D.setMVPMatrix(mvpMat);
+        Graphics.Shaders.base2D.setModelMatrix(modMat);
         tex.bind();
         rect.draw();
 

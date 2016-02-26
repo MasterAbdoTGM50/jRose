@@ -69,19 +69,19 @@ public class Shader extends GLResource{
 
     public void uploadVec2f(int location, Vector2f vector) {
 
-        GL20.glUniform2f(location, vector.x, vector.y);
+        GL20.glUniform2fv(location, vector.get(BufferUtils.createFloatBuffer(2)));
 
     }
 
     public void uploadVec3f(int location, Vector3f vector) {
 
-        GL20.glUniform3f(location, vector.x, vector.y, vector.z);
+        GL20.glUniform3fv(location, vector.get(BufferUtils.createFloatBuffer(3)));
 
     }
 
     public void uploadVec4f(int location, Vector4f vector) {
 
-        GL20.glUniform4f(location, vector.x, vector.y, vector.z, vector.w);
+        GL20.glUniform4fv(location, vector.get(BufferUtils.createFloatBuffer(4)));
 
     }
 

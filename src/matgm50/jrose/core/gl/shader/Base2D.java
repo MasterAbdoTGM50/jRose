@@ -7,7 +7,9 @@ import org.joml.Vector3f;
 
 public class Base2D extends Shader {
 
-    private int mvpMatLoc;
+    private int proMatLoc;
+    private int vieMatLoc;
+    private int modMatLoc;
     private int colorLoc;
 
     public Base2D() { super("base2d"); }
@@ -17,8 +19,16 @@ public class Base2D extends Shader {
 
         super.init();
 
-        mvpMatLoc = getUniform("mvp_mat");
+        bind();
+
+        proMatLoc = getUniform("pro_mat");
+        vieMatLoc = getUniform("vie_mat");
+        modMatLoc = getUniform("mod_mat");
         colorLoc = getUniform("color");
+
+        setProjectionMatrix(new Matrix4f());
+        setViewMatrix(new Matrix4f());
+        setModelMatrix(new Matrix4f());
 
     }
 
@@ -28,6 +38,10 @@ public class Base2D extends Shader {
 
     public void setColor(Vector3f color) { uploadVec3f(colorLoc, color);}
 
-    public void setMVPMatrix(Matrix4f mvpMatrix) { uploadMat4f(mvpMatLoc, mvpMatrix); }
+    public void setProjectionMatrix(Matrix4f projectionMatrix) { uploadMat4f(proMatLoc, projectionMatrix); }
+
+    public void setViewMatrix(Matrix4f viewMatrix) { uploadMat4f(vieMatLoc, viewMatrix); }
+
+    public void setModelMatrix(Matrix4f modelMatrix) { uploadMat4f(modMatLoc, modelMatrix); }
 
 }
