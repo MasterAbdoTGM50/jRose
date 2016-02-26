@@ -19,12 +19,12 @@ public class Base2D extends Shader {
 
         super.init();
 
-        bind();
-
         proMatLoc = getUniform("pro_mat");
         vieMatLoc = getUniform("vie_mat");
         modMatLoc = getUniform("mod_mat");
         colorLoc = getUniform("color");
+
+        bind();
 
         setProjectionMatrix(new Matrix4f());
         setViewMatrix(new Matrix4f());
