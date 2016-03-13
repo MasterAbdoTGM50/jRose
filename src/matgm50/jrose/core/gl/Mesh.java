@@ -16,9 +16,6 @@ public abstract class Mesh extends GLResource {
     private int vboID;
     private int eboID;
 
-    private float[] vertices;
-    private int[] indices;
-
     public Mesh() {}
 
     @Override
@@ -61,9 +58,13 @@ public abstract class Mesh extends GLResource {
     @Override
     public void deinit() {
 
+        unbind();
+
         GL15.glDeleteBuffers(vaoID);
         GL15.glDeleteBuffers(vboID);
         GL15.glDeleteBuffers(eboID);
+
+        initialized = false;
 
     }
 

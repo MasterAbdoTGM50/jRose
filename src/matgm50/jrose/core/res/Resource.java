@@ -1,4 +1,4 @@
-package matgm50.jrose.core.util;
+package matgm50.jrose.core.res;
 
 public abstract class Resource {
 

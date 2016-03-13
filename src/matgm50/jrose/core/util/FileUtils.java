@@ -1,5 +1,6 @@
 package matgm50.jrose.core.util;
 
+import matgm50.jrose.core.res.Resources;
 import org.lwjgl.BufferUtils;
 
 import java.io.*;
@@ -10,7 +11,7 @@ public class FileUtils {
     public static ByteBuffer loadFileAsByteBuffer(String dir) {
 
         int byt;
-        BufferedInputStream stream = new BufferedInputStream(getResource(dir));
+        BufferedInputStream stream = new BufferedInputStream(Resources.getResource(dir));
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
         try {
@@ -29,10 +30,7 @@ public class FileUtils {
 
             return buffer;
 
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
 
         return BufferUtils.createByteBuffer(1);
 
@@ -45,7 +43,7 @@ public class FileUtils {
         try {
 
             String line;
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getResource(dir)));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(Resources.getResource(dir)));
 
             while ((line = reader.readLine()) != null) {
 
@@ -55,25 +53,9 @@ public class FileUtils {
 
             reader.close();
 
-        } catch (IOException e) {e.printStackTrace();}
+        } catch (IOException e) { e.printStackTrace(); }
 
         return fileAsString;
-
-    }
-
-    public static InputStream getResource(String dir) {
-
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-
-        if(loader.getResource("/" + dir) != null) {
-
-            return loader.getResourceAsStream("/" + dir);
-
-        } else {
-
-            return loader.getResourceAsStream(dir);
-
-        }
 
     }
 

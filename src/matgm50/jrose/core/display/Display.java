@@ -1,6 +1,6 @@
 package matgm50.jrose.core.display;
 
-import matgm50.jrose.core.util.Resource;
+import matgm50.jrose.core.res.Resource;
 import org.lwjgl.glfw.GLFWFramebufferSizeCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;

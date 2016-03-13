@@ -53,6 +53,8 @@ public class Shader extends GLResource{
         GL20.glDeleteShader(vertShaderID);
         GL20.glDeleteShader(fragShaderID);
 
+        initialized = false;
+
     }
 
     public int getUniform(String name) {

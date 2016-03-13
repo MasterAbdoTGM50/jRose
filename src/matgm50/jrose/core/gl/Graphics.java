@@ -1,7 +1,7 @@
 package matgm50.jrose.core.gl;
 
 import matgm50.jrose.core.gl.shader.Base2D;
-import matgm50.jrose.core.util.Resource;
+import matgm50.jrose.core.res.Resource;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
@@ -33,9 +33,6 @@ public class Graphics extends Resource {
         GL11.glViewport(0, 0, width, height);
         proMat.setOrtho2D(0, width, 0, height);
 
-        Shaders.base2D.bind();
-        Shaders.base2D.setProjectionMatrix(proMat);
-
     }
 
     @Override
@@ -47,11 +44,11 @@ public class Graphics extends Resource {
 
     public static class Colors {
 
-        public static final Color WHITE = new Color(1.0f, 1.0f, 1.0f);
-        public static final Color BLACK = new Color(0.0f, 0.0f, 0.0f);
-        public static final Color RED = new Color(1.0f, 0.0f, 0.0f);
-        public static final Color GREEN = new Color(0.0f, 1.0f, 0.0f);
-        public static final Color BLUE = new Color(0.0f, 0.0f, 1.0f);
+        public static final Color WHITE = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+        public static final Color BLACK = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        public static final Color RED = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+        public static final Color GREEN = new Color(0.0f, 1.0f, 0.0f, 1.0f);
+        public static final Color BLUE = new Color(0.0f, 0.0f, 1.0f, 1.0f);
 
     }
 

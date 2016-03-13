@@ -67,6 +67,8 @@ public class Texture extends GLResource {
         unbind();
         GL11.glDeleteTextures(textureID);
 
+        initialized = false;
+
     }
 
     public int getWidth() { return width; }

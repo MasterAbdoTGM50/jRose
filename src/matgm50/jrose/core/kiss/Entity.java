@@ -4,6 +4,7 @@ import matgm50.jrose.core.gl.Color;
 import matgm50.jrose.core.gl.Graphics;
 import matgm50.jrose.core.gl.Texture;
 import matgm50.jrose.core.gl.mesh.Rect;
+import matgm50.jrose.core.res.Resources;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
@@ -22,7 +23,7 @@ public class Entity {
         this.width = width;
         this.height = height;
 
-        tex = new Texture(textureDir);
+        tex = Resources.loadTexture(textureDir);
         rect = new Rect(this.width, this.height);
 
     }
@@ -34,20 +35,36 @@ public class Entity {
 
         Graphics.Shaders.base2D.bind();
 
+        modMat.identity();
         modMat.setTranslation(pos.x, pos.y, 0);
 
         Graphics.Shaders.base2D.setColor(color);
-        Graphics.Shaders.base2D.setModelMatrix(modMat);
+        Graphics.Shaders.base2D.setMVPMatrix(Graphics.proMat, new Matrix4f(), modMat);
+
         tex.bind();
         rect.draw();
 
     }
+    
+    public boolean isColliding(Entity entity) {
 
-    public void kill() {
+        boolean collidingHorizontal = false;
+        boolean collidingVertical = false;
 
-        rect.deinit();
-        tex.deinit();
+        if(this.pos.x > entity.pos.x && this.pos.x < entity.pos.x + entity.width) { collidingHorizontal = true; }
+        if(this.pos.x + this.width > entity.pos.x && this.pos.x + this.width < entity.pos.x + entity.width) {
+            collidingHorizontal = true;
+        }
 
+        if(this.pos.y > entity.pos.y && this.pos.y < entity.pos.y + entity.height) { collidingVertical = true; }
+        if(this.pos.y + this.height > entity.pos.y && this.pos.y + this.height  < entity.pos.y + entity.height) {
+            collidingVertical = true;
+        }
+
+        return collidingHorizontal && collidingVertical;
+        
     }
+
+    public void kill() {}
 
 }
