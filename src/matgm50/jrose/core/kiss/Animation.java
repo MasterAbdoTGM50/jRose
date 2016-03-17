@@ -6,9 +6,11 @@ public class Animation {
 
     int time;
     Texture[] textures;
-    double timeFraction;
+    double frameTime;
+    double currTime;
 
-    public double currTime;
+    boolean paused = false;
+
     public int currFrame;
     public Texture activeTexture;
 
@@ -17,7 +19,7 @@ public class Animation {
         this.time = time;
         this.textures = textures;
 
-        timeFraction = ((float)time / (float)textures.length);
+        frameTime = ((float)time / (float)textures.length);
 
         activeTexture = this.textures[0];
 
@@ -25,15 +27,25 @@ public class Animation {
 
     public void update(double delta) {
 
-        currTime += delta;
-        currFrame = (int)(currTime/timeFraction);
+        if(!isPaused()) {
 
-        if(currFrame >= textures.length) {currFrame = 0; currTime = 0; }
+            currTime += delta;
+            currFrame = (int)(currTime / frameTime);
 
-        activeTexture = textures[currFrame];
+            if(currFrame >= textures.length) { currFrame = 0; currTime = 0; }
 
-        if(!activeTexture.isInitialized()) { activeTexture.init(); }
+            activeTexture = textures[currFrame];
+
+            if(!activeTexture.isInitialized()) { activeTexture.init(); }
+
+        }
 
     }
+
+    public boolean isPaused() { return paused; }
+
+    public void play() { paused = false; }
+
+    public void pause() { paused = true; }
 
 }
