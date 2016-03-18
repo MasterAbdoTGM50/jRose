@@ -6,7 +6,6 @@ import matgm50.jrose.core.display.Resolution;
 import matgm50.jrose.core.gl.Graphics;
 import matgm50.jrose.core.gl.mesh.Rect;
 import matgm50.jrose.core.input.Input;
-import matgm50.jrose.core.input.Key;
 import matgm50.jrose.core.kiss.Animation;
 import matgm50.jrose.core.res.Resources;
 import org.joml.Matrix4f;

@@ -88,6 +88,7 @@ public class SpaceShooter extends Scene {
 
                     if(balls.get(i).isColliding(targets.get(j))) {
 
+                        targets.get(j).kill();
                         targets.remove(j);
                         markedForRemoval = true;
 

@@ -65,6 +65,6 @@ public class Entity {
         
     }
 
-    public void kill() {}
+    public void kill() { rect.deinit(); }
 
 }
