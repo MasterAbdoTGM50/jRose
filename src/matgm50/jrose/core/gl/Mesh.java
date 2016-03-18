@@ -60,7 +60,7 @@ public abstract class Mesh extends GLResource {
 
         unbind();
 
-        GL15.glDeleteBuffers(vaoID);
+        GL30.glDeleteVertexArrays(vaoID);
         GL15.glDeleteBuffers(vboID);
         GL15.glDeleteBuffers(eboID);
 
