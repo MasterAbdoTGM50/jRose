@@ -2,6 +2,7 @@ package matgm50.jrose.core.res;
 
 import matgm50.jrose.core.gl.Texture;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 
@@ -17,7 +18,7 @@ public class Resources {
 
         } else {
 
-            textures.put(dir, new Texture(dir));
+            textures.put(dir, new Texture(new Raw(getResource(dir))));
             return textures.get(dir);
 
         }

@@ -1,6 +1,6 @@
 package matgm50.jrose.core.gl;
 
-import matgm50.jrose.core.util.FileUtils;
+import matgm50.jrose.core.res.Raw;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
@@ -13,12 +13,12 @@ public class Texture extends GLResource {
 
     private int textureID;
 
-    private final String dir;
+    private final Raw raw;
     private int width, height;
 
-    public Texture(String dir) {
+    public Texture(Raw raw) {
 
-        this.dir = dir;
+        this.raw = raw;
 
     }
 
@@ -27,7 +27,7 @@ public class Texture extends GLResource {
 
         if(initialized) { return; }
 
-        ByteBuffer image = FileUtils.loadFileAsByteBuffer(dir);
+        ByteBuffer image = raw.asByteBuffer();
         IntBuffer w = BufferUtils.createIntBuffer(1);
         IntBuffer h = BufferUtils.createIntBuffer(1);
         IntBuffer c = BufferUtils.createIntBuffer(1);
@@ -63,6 +63,8 @@ public class Texture extends GLResource {
 
     @Override
     public void deinit() {
+
+        raw.deinit();
 
         unbind();
         GL11.glDeleteTextures(textureID);
