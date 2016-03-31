@@ -1,4 +1,4 @@
-package matgm50.jrose.demo;
+package matgm50.jrose.demo.spaceshooter;
 
 import matgm50.jrose.core.Game;
 import matgm50.jrose.core.Scene;
@@ -31,16 +31,14 @@ public class SpaceShooter extends Scene {
         for(int i = 0; i < 5; i++) {
 
             Entity target = new Entity("demo/target.png", 100, 100);
-            target.pos.y = 490;
-            target.pos.x = (i * target.width + 10) + 40;
+            target.setPos((i * target.width + 10) + 40, 490);
             targets.add(target);
 
         }
 
-        winMsg.pos.x = 200;
-        winMsg.pos.y = 200;
+        winMsg.setPos(200, 200);
 
-        ship.pos.x = 250;
+        ship.setPos(250, 0);
 
         game.input.registerInputState(new Key("right", GLFW.GLFW_KEY_RIGHT));
         game.input.registerInputState(new Key("left", GLFW.GLFW_KEY_LEFT));
@@ -61,21 +59,20 @@ public class SpaceShooter extends Scene {
 
             if(game.input.getKey("right").isHeld()) {
 
-                ship.pos.x += 200 * delta;
+                ship.move((float)(200 * delta), 0);
 
             }
 
             if(game.input.getKey("left").isHeld()) {
 
-                ship.pos.x -= 200 * delta;
+                ship.move((float)(-200 * delta), 0);
 
             }
 
             if(game.input.getKey("shoot").isPressed()) {
 
                 Entity ball = new Entity("demo/ball.png", 20, 20);
-                ball.pos.x = ship.pos.x + 40;
-                ball.pos.y = ship.pos.y + 110;
+                ball.setPos(ship.getX() + 40, ship.getY() + 110);
                 balls.add(ball);
 
             }
@@ -96,7 +93,7 @@ public class SpaceShooter extends Scene {
 
                 }
 
-                if(balls.get(i).pos.y > 600) {
+                if(balls.get(i).getY() > 600) {
 
                     balls.get(i).kill();
                     markedForRemoval = true;
@@ -109,7 +106,7 @@ public class SpaceShooter extends Scene {
 
             for(Entity ball : balls) {
 
-                ball.pos.y += 300 * delta;
+                ball.move(0, (float)(300 * delta));
                 ball.draw();
 
             }

@@ -12,16 +12,22 @@ public class Entity {
 
     Rect rect;
     Texture tex;
+    Vector2f pos = new Vector2f();
+
     Matrix4f modMat = new Matrix4f();
+    boolean active = true;
+    boolean visible = true;
 
     public int width, height;
+    public BoundingBox bb;
     public Color color = Graphics.Colors.WHITE;
-    public Vector2f pos = new Vector2f();
 
     public Entity(String textureDir, int width, int height) {
 
         this.width = width;
         this.height = height;
+
+        bb = new BoundingBox(pos.x, pos.y, width, height);
 
         tex = Resources.loadTexture(textureDir);
         rect = new Rect(this.width, this.height);
@@ -33,38 +39,49 @@ public class Entity {
         if (!rect.isInitialized()) { rect.init(); }
         if (!tex.isInitialized()) { tex.init(); }
 
-        Graphics.Shaders.base2D.bind();
+        if(isVisible()) {
 
-        modMat.identity();
-        modMat.setTranslation(pos.x, pos.y, 0);
+            Graphics.Shaders.base2D.bind();
 
-        Graphics.Shaders.base2D.setColor(color);
-        Graphics.Shaders.base2D.setMVPMatrix(Graphics.proMat, new Matrix4f(), modMat);
+            modMat.identity();
+            modMat.setTranslation(pos.x, pos.y, 0);
 
-        tex.bind();
-        rect.draw();
+            Graphics.Shaders.base2D.setColor(color);
+            Graphics.Shaders.base2D.setMVPMatrix(Graphics.proMat, new Matrix4f(), modMat);
+
+            tex.bind();
+            rect.draw();
+
+        }
 
     }
+
+    public void move(float x, float y) { setPos(this.pos.x + x, this.pos.y + y); }
+
+    public void setPos(float x, float y) { setPos(new Vector2f(x, y)); }
+
+    public void setPos(Vector2f pos) {
+
+        this.pos = pos;
+        this.bb.setPos(pos);
+
+    }
+
+    public float getX() { return this.pos.x; }
+    public float getY() { return this.pos.y; }
     
-    public boolean isColliding(Entity entity) {
-
-        boolean collidingHorizontal = false;
-        boolean collidingVertical = false;
-
-        if(this.pos.x > entity.pos.x && this.pos.x < entity.pos.x + entity.width) { collidingHorizontal = true; }
-        if(this.pos.x + this.width > entity.pos.x && this.pos.x + this.width < entity.pos.x + entity.width) {
-            collidingHorizontal = true;
-        }
-
-        if(this.pos.y > entity.pos.y && this.pos.y < entity.pos.y + entity.height) { collidingVertical = true; }
-        if(this.pos.y + this.height > entity.pos.y && this.pos.y + this.height  < entity.pos.y + entity.height) {
-            collidingVertical = true;
-        }
-
-        return collidingHorizontal && collidingVertical;
-        
-    }
+    public boolean isColliding(Entity entity) { return this.bb.isColliding(entity.bb); }
 
     public void kill() { rect.deinit(); }
+
+    public boolean isActive() { return active; }
+
+    public void activate() { this.active = true; }
+    public void deactivate() { this.active = false; }
+
+    public boolean isVisible() { return visible; }
+
+    public void show() { this.visible = true; }
+    public void hide() { this.visible = false; }
 
 }

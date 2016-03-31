@@ -1,6 +1,7 @@
 package matgm50.jrose.demo;
 
 import matgm50.jrose.core.Game;
+import matgm50.jrose.demo.spaceshooter.SpaceShooter;
 
 public class Launcher {
 
