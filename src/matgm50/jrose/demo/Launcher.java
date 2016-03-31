@@ -5,6 +5,8 @@ import matgm50.jrose.demo.spaceshooter.SpaceShooter;
 
 public class Launcher {
 
+
+    //This comment was added to follow the tradition of saying hello to Starlog
     public static void main(String[] args) {
 
         Game game = new Game();
