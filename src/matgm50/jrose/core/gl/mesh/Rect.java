@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 public class Rect extends Mesh {
 
     private int width, height;
+    private float uvX = 0.0f, uvY = 0.0f, uvWidth = 1.0f, uvHeight = 1.0f;
 
     public Rect(int width, int height) {
 
@@ -14,11 +15,16 @@ public class Rect extends Mesh {
 
     }
 
-    public void resize(int width, int height) {
+    public Rect setRegion(float uvX, float uvY, float uvWidth, float uvHeight) {
 
-        this.width = width;
-        this.height = height;
-        uploadVertices(getVertices());
+        if(initialized) { return this; }
+
+        this.uvX = uvX;
+        this.uvY = uvY;
+        this.uvWidth = uvWidth;
+        this.uvHeight = uvHeight;
+
+        return this;
 
     }
 
@@ -26,10 +32,10 @@ public class Rect extends Mesh {
     protected float[] getVertices() {
 
         return new float[] {
-                0.0f, 0.0f, 0.0f, 0.0f,
-                width, 0.0f, 1.0f, 0.0f,
-                0.0f, height, 0.0f, 1.0f,
-                width, height, 1.0f, 1.0f,
+                0.0f, 0.0f, uvX, uvY,
+                width, 0.0f, uvX + uvWidth, 0.0f,
+                0.0f, height, 0.0f, uvY + uvHeight,
+                width, height, uvX + uvWidth, uvY + uvHeight
         };
 
     }
