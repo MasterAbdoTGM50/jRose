@@ -33,8 +33,8 @@ public class Rect extends Mesh {
 
         return new float[] {
                 0.0f, 0.0f, uvX, uvY,
-                width, 0.0f, uvX + uvWidth, 0.0f,
-                0.0f, height, 0.0f, uvY + uvHeight,
+                width, 0.0f, uvX + uvWidth, uvY,
+                0.0f, height, uvX, uvY + uvHeight,
                 width, height, uvX + uvWidth, uvY + uvHeight
         };
 

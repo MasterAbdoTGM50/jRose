@@ -19,6 +19,8 @@ public class Raw extends Resource {
     @Override
     public void deinit() { }
 
+    public byte[] asByteArray() { return this.bytes; }
+
     public ByteBuffer asByteBuffer() {
 
         ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
@@ -75,8 +77,5 @@ public class Raw extends Resource {
         return new byte[0];
 
     }
-
-    @Override
-    public String toString() { return asString(); }
 
 }
