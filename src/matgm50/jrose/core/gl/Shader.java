@@ -4,6 +4,7 @@ import matgm50.jrose.core.res.Raw;
 import matgm50.jrose.core.res.Resource;
 import matgm50.jrose.core.res.Resources;
 import matgm50.jrose.core.util.Lib;
+import matgm50.jrose.core.util.StringUtils;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
@@ -16,8 +17,7 @@ public class Shader extends GLResource{
     private int vertShaderID;
     private int fragShaderID;
 
-    Raw vshRaw;
-    Raw fshRaw;
+    Raw raw;
 
     protected Shader(String name) { this.name = name; }
 
@@ -26,8 +26,9 @@ public class Shader extends GLResource{
 
         if(initialized) { return; }
 
-        String vshSrc = (vshRaw = new Raw(Resources.getResource(Lib.SHADERS_LOC + name + ".vsh"))).asString();
-        String fshSrc = (fshRaw = new Raw(Resources.getResource(Lib.SHADERS_LOC + name + ".fsh"))).asString();
+        String src = (raw = new Raw(Resources.getResource(Lib.SHADERS_LOC + name + ".vfsh"))).asString();
+        String vshSrc = StringUtils.getStrBetweenTags(src, "<Vertex Shader>");
+        String fshSrc = StringUtils.getStrBetweenTags(src, "<Fragment Shader>");
 
         shaderID = GL20.glCreateProgram();
         vertShaderID = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
@@ -54,8 +55,7 @@ public class Shader extends GLResource{
 
     public void deinit() {
 
-        vshRaw.deinit();
-        fshRaw.deinit();
+        raw.deinit();
 
         GL20.glDeleteProgram(shaderID);
         GL20.glDeleteShader(vertShaderID);
