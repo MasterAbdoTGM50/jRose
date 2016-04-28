@@ -4,6 +4,7 @@ import matgm50.jrose.core.Game;
 import matgm50.jrose.core.Scene;
 import matgm50.jrose.core.display.Resolution;
 import matgm50.jrose.core.gl.Graphics;
+import matgm50.jrose.core.input.Input;
 import matgm50.jrose.core.input.Key;
 import matgm50.jrose.core.kiss.Entity;
 import org.lwjgl.glfw.GLFW;
@@ -56,6 +57,18 @@ public class SpaceShooter extends Scene {
             winMsg.draw();
 
         } else {
+
+            if(game.input.getMouse(Input.RIGHT_MOUSE).isPressed()) {
+
+                Graphics.Shaders.base2D.enableTextures();
+
+            }
+
+            if(game.input.getMouse(Input.LEFT_MOUSE).isPressed()) {
+
+                Graphics.Shaders.base2D.disableTextures();
+
+            }
 
             if(game.input.getKey("right").isHeld()) {
 

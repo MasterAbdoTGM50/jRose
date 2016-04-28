@@ -9,6 +9,7 @@ import org.joml.Vector4f;
 
 public class Base2D extends Shader {
 
+    private int texEnLoc;
     private int mvpMatLoc;
     private int colorLoc;
 
@@ -19,6 +20,7 @@ public class Base2D extends Shader {
 
         super.init();
 
+        texEnLoc = getUniform("tex_enabled");
         mvpMatLoc = getUniform("mvp_mat");
         colorLoc = getUniform("color");
 
@@ -33,6 +35,10 @@ public class Base2D extends Shader {
     public void setColor(Color color) { setColor(color.getVector()); }
 
     public void setColor(Vector4f color) { uploadVec4f(colorLoc, color);}
+
+    public void enableTextures() { uploadBoolean(texEnLoc, true); }
+
+    public void disableTextures() { uploadBoolean(texEnLoc, false);}
 
     public void setMVPMatrix(Matrix4f proMat, Matrix4f vieMat, Matrix4f modMat) {
 

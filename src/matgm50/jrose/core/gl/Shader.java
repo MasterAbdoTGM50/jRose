@@ -1,12 +1,12 @@
 package matgm50.jrose.core.gl;
 
 import matgm50.jrose.core.res.Raw;
-import matgm50.jrose.core.res.Resource;
 import matgm50.jrose.core.res.Resources;
 import matgm50.jrose.core.util.Lib;
 import matgm50.jrose.core.util.StringUtils;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 public class Shader extends GLResource{
@@ -74,6 +74,18 @@ public class Shader extends GLResource{
     public int getAttribute(String name) {
 
         return GL20.glGetAttribLocation(shaderID, name);
+
+    }
+
+    public void uploadBoolean(int location, boolean bool) {
+
+        uploadInt(location, (bool) ? GL11.GL_TRUE : GL11.GL_FALSE);
+
+    }
+
+    public void uploadInt(int location, int i) {
+
+        GL20.glUniform1i(location, i);
 
     }
 
