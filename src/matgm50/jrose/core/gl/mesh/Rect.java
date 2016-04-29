@@ -32,10 +32,22 @@ public class Rect extends Mesh {
     protected float[] getVertices() {
 
         return new float[] {
-                0.0f, 0.0f, uvX, uvY,
-                width, 0.0f, uvX + uvWidth, uvY,
-                0.0f, height, uvX, uvY + uvHeight,
-                width, height, uvX + uvWidth, uvY + uvHeight
+                0.0f, 0.0f,
+                width, 0.0f,
+                0.0f, height,
+                width, height
+        };
+
+    }
+
+    @Override
+    protected float[] getUVs() {
+
+        return new float[] {
+                uvX, uvY,
+                uvX + uvWidth, uvY,
+                uvX, uvY + uvHeight,
+                uvX + uvWidth, uvY + uvHeight
         };
 
     }

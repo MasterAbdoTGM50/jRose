@@ -13,8 +13,9 @@ import java.nio.IntBuffer;
 public abstract class Mesh extends GLResource {
 
     private int vaoID;
-    private int vboID;
-    private int eboID;
+    private int verticesID;
+    private int uvsID;
+    private int indicesID;
 
     public Mesh() {}
 
@@ -26,11 +27,12 @@ public abstract class Mesh extends GLResource {
         vaoID = GL30.glGenVertexArrays();
         GL30.glBindVertexArray(vaoID);
 
-        vboID = GL15.glGenBuffers();
-        eboID = GL15.glGenBuffers();
+        verticesID = GL15.glGenBuffers();
+        uvsID = GL15.glGenBuffers();
+        indicesID = GL15.glGenBuffers();
 
         uploadVertices(getVertices());
-
+        uploadUVs(getUVs());
         uploadIndices(getIndices());
 
         initialized = true;
@@ -41,8 +43,8 @@ public abstract class Mesh extends GLResource {
     public void bind() {
 
         GL30.glBindVertexArray(vaoID);
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
-        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, eboID);
+        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, verticesID);
+        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, indicesID);
 
     }
 
@@ -61,8 +63,9 @@ public abstract class Mesh extends GLResource {
         unbind();
 
         GL30.glDeleteVertexArrays(vaoID);
-        GL15.glDeleteBuffers(vboID);
-        GL15.glDeleteBuffers(eboID);
+        GL15.glDeleteBuffers(verticesID);
+        GL15.glDeleteBuffers(uvsID);
+        GL15.glDeleteBuffers(indicesID);
 
         initialized = false;
 
@@ -70,24 +73,33 @@ public abstract class Mesh extends GLResource {
 
     protected void uploadVertices(float[] vertices) {
 
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
+        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, verticesID);
         FloatBuffer buffer = BufferUtils.createFloatBuffer(vertices.length);
         buffer.put(vertices).flip();
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
 
         int posAtr = Graphics.Shaders.base2D.getAttribute("position");
-        GL20.glVertexAttribPointer(posAtr, 2, GL11.GL_FLOAT, false, 4 * Lib.SIZE_OF_FLOAT, 0);
+        GL20.glVertexAttribPointer(posAtr, 2, GL11.GL_FLOAT, false, 0, 0);
         GL20.glEnableVertexAttribArray(posAtr);
 
+    }
+
+    protected void uploadUVs(float[] uvs) {
+
+        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, uvsID);
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(uvs.length);
+        buffer.put(uvs).flip();
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
+
         int uvAtr = Graphics.Shaders.base2D.getAttribute("in_uv");
-        GL20.glVertexAttribPointer(uvAtr, 2, GL11.GL_FLOAT, false, 4 * Lib.SIZE_OF_FLOAT, 2 * Lib.SIZE_OF_FLOAT);
+        GL20.glVertexAttribPointer(uvAtr, 2, GL11.GL_FLOAT, false, 0, 0);
         GL20.glEnableVertexAttribArray(uvAtr);
 
     }
 
     protected void uploadIndices(int[] indices) {
 
-        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, eboID);
+        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, indicesID);
         IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
         buffer.put(indices).flip();
         GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
@@ -95,6 +107,8 @@ public abstract class Mesh extends GLResource {
     }
 
     protected abstract float[] getVertices();
+
+    protected abstract float[] getUVs();
 
     protected abstract int[] getIndices();
 
