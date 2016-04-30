@@ -56,17 +56,27 @@ public class Texture extends GLResource {
     }
 
     @Override
-    public void bind() { GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID); }
+    public void bind() {
+
+        if(!initialized) { return; }
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureID);
+
+    }
 
     @Override
-    public void unbind() { GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0); }
+    public void unbind() {
+
+        if(!initialized) { return; }
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+
+    }
 
     @Override
     public void deinit() {
 
-        raw.deinit();
-
         unbind();
+
+        raw.deinit();
         GL11.glDeleteTextures(textureID);
 
         initialized = false;

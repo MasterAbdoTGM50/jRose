@@ -1,6 +1,5 @@
 package matgm50.jrose.core.gl;
 
-import matgm50.jrose.core.util.Lib;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -42,6 +41,8 @@ public abstract class Mesh extends GLResource {
     @Override
     public void bind() {
 
+        if(!initialized) { return; }
+
         GL30.glBindVertexArray(vaoID);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, verticesID);
         GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, indicesID);
@@ -50,6 +51,8 @@ public abstract class Mesh extends GLResource {
 
     @Override
     public void unbind() {
+
+        if(!initialized) { return; }
 
         GL30.glBindVertexArray(0);
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);

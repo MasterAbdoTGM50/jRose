@@ -49,11 +49,23 @@ public class Shader extends GLResource{
 
     }
 
-    public void bind() { GL20.glUseProgram(shaderID); }
+    public void bind() {
 
-    public void unbind() { GL20.glUseProgram(0); }
+        if(!initialized) { return; }
+        GL20.glUseProgram(shaderID);
+
+    }
+
+    public void unbind() {
+
+        if(!initialized) { return; }
+        GL20.glUseProgram(0);
+
+    }
 
     public void deinit() {
+
+        unbind();
 
         raw.deinit();
 
