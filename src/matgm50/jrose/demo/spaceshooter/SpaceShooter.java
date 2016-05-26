@@ -16,10 +16,10 @@ public class SpaceShooter extends Scene {
 
     boolean won = false;
 
-    Entity ship = new Entity("demo/ship.png", 100, 100);
+    Entity ship;
     List<Entity> balls = new ArrayList<>();
     List<Entity> targets = new ArrayList<>();
-    Entity winMsg = new Entity("demo/win.png", 200, 200);
+    Entity winMsg;
 
     public SpaceShooter(Game game) { super(game); }
 
@@ -28,6 +28,9 @@ public class SpaceShooter extends Scene {
 
         game.display.setTitle("jRose2D: Space Shooter Demo");
         game.display.switchResolution(new Resolution(600, 600));
+
+        ship = new Entity("demo/ship.png", 100, 100);
+        winMsg = new Entity("demo/win.png", 200, 200);
 
         for(int i = 0; i < 5; i++) {
 

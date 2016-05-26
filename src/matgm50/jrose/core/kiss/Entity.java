@@ -10,11 +10,9 @@ import org.joml.Vector2f;
 
 public class Entity {
 
-    Rect rect;
-    Texture tex;
     Vector2f pos = new Vector2f();
+    Sprite sprite;
 
-    Matrix4f modMat = new Matrix4f();
     boolean active = true;
     boolean visible = true;
 
@@ -29,28 +27,16 @@ public class Entity {
 
         bb = new BoundingBox(pos.x, pos.y, width, height);
 
-        tex = Resources.loadTexture(textureDir);
-        rect = new Rect(this.width, this.height);
+        sprite = new Sprite(Resources.loadTexture(textureDir));
 
     }
 
     public void draw() {
 
-        if (!rect.isInitialized()) { rect.init(); }
-        if (!tex.isInitialized()) { tex.init(); }
-
         if(isVisible()) {
 
-            Graphics.Shaders.base2D.bind();
-
-            modMat.identity();
-            modMat.setTranslation(pos.x, pos.y, 0);
-
-            Graphics.Shaders.base2D.setColor(color);
-            Graphics.Shaders.base2D.setMVPMatrix(Graphics.proMat, new Matrix4f(), modMat);
-
-            tex.bind();
-            rect.draw();
+            sprite.color = color;
+            sprite.draw(pos.x, pos.y, width, height);
 
         }
 
@@ -72,7 +58,7 @@ public class Entity {
     
     public boolean isColliding(Entity entity) { return this.bb.isColliding(entity.bb); }
 
-    public void kill() { rect.deinit(); }
+    public void kill() { sprite.deinit(); }
 
     public boolean isActive() { return active; }
 
