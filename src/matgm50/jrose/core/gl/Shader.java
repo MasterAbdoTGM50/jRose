@@ -27,8 +27,8 @@ public class Shader extends GLResource{
         if(initialized) { return; }
 
         String src = (raw = new Raw(Resources.getResource(Lib.SHADERS_LOC + name + ".vfsh"))).asString();
-        String vshSrc = StringUtils.getStrBetweenTags(src, "<Vertex Shader>");
-        String fshSrc = StringUtils.getStrBetweenTags(src, "<Fragment Shader>");
+        String vshSrc = StringUtils.getStrBetweenTags(src, "Vertex Shader");
+        String fshSrc = StringUtils.getStrBetweenTags(src, "Fragment Shader");
 
         shaderID = GL20.glCreateProgram();
         vertShaderID = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);

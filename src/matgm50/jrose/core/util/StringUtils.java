@@ -4,6 +4,8 @@ public class StringUtils {
 
     public static String getStrBetweenTags(String str, String tag) {
 
+        tag = "<" + tag + ">";
+
         String region;
         int regionStart = 0, regionEnd = 0;
 

@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 public class Graphics extends Resource {
 
     public static Matrix4f proMat = new Matrix4f();
+    public static Matrix4f vieMat = new Matrix4f();
 
     public Color clearColor = Colors.BLACK;
 

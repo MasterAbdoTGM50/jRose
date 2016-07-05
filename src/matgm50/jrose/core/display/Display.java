@@ -47,9 +47,10 @@ public class Display extends Resource {
         windowID = glfwCreateWindow(resolution.getWidth(), resolution.getHeight(), title, fullscreen, NULL);
 
         GLFWVidMode monitorProps = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        int xPos = (monitorProps.width() - resolution.getWidth()) / 2;
+        int yPos =  (monitorProps.height() - resolution.getHeight()) / 2;
 
-        glfwSetWindowPos(windowID, (monitorProps.width() - resolution.getWidth()) / 2,
-                (monitorProps.height() - resolution.getHeight()) / 2);
+        glfwSetWindowPos(windowID, xPos, yPos);
 
         glfwSetFramebufferSizeCallback(windowID, resizeCallback);
 
@@ -75,7 +76,7 @@ public class Display extends Resource {
 
         glfwDestroyWindow(windowID);
         glfwTerminate();
-        resizeCallback.release();
+        resizeCallback.free();
 
     }
 
@@ -110,6 +111,6 @@ public class Display extends Resource {
 
     public void setFullscreen(boolean fullscreen) { this.fullscreen = fullscreen; }
 
-    public boolean shouldClose() { return glfwWindowShouldClose(windowID) == GLFW_TRUE; }
+    public boolean shouldClose() { return glfwWindowShouldClose(windowID); }
 
 }
