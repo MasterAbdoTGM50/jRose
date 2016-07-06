@@ -10,7 +10,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Display extends Resource {
 
-    private long windowID;
+    private long windowID = 0;
     private IDisplayHandler displayHandler = null;
 
     private String title = "jRose Core Game";
@@ -86,7 +86,7 @@ public class Display extends Resource {
 
         this.title = title;
 
-        if (glfwGetCurrentContext() != 0) {
+        if (windowID != 0) {
 
             glfwSetWindowTitle(windowID, getTitle());
 

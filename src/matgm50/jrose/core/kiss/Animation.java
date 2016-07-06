@@ -11,8 +11,7 @@ public class Animation {
 
     boolean paused = false;
 
-    public int currFrame;
-    public Texture activeTexture;
+    public int currFrame = 0;
 
     public Animation(int time, Texture... textures) {
 
@@ -20,8 +19,6 @@ public class Animation {
         this.textures = textures;
 
         frameTime = ((float)time / (float)textures.length);
-
-        activeTexture = this.textures[0];
 
     }
 
@@ -34,13 +31,13 @@ public class Animation {
 
             if(currFrame >= textures.length) { currFrame = 0; currTime = 0; }
 
-            activeTexture = textures[currFrame];
-
-            if(!activeTexture.isInitialized()) { activeTexture.init(); }
+            if(!getActiveTexture().isInitialized()) { getActiveTexture().init(); }
 
         }
 
     }
+
+    public Texture getActiveTexture() { return textures[currFrame]; }
 
     public boolean isPaused() { return paused; }
 
