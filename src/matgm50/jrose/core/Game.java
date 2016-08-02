@@ -17,7 +17,7 @@ public class Game implements IDisplayHandler{
     public Graphics graphics = new Graphics();
     public Input input = new Input();
 
-    private Scene activeScene;
+    private IScene activeScene;
 
     public void run() {
 
@@ -45,10 +45,10 @@ public class Game implements IDisplayHandler{
     private void init() {
 
         display.setDisplayHandler(this);
+        display.setInputHandler(input);
         display.init();
         graphics.init();
         graphics.updateProjection(display.getWidth(), display.getHeight());
-        input.init();
         STBImage.stbi_set_flip_vertically_on_load(1);
 
         if (activeScene != null)
@@ -61,12 +61,12 @@ public class Game implements IDisplayHandler{
         lastFrameTime = currFrameTime;
         currFrameTime = glfwGetTime();
 
-        input.updateInputStates();
         graphics.clearScreen();
 
         if (activeScene != null)
             activeScene.update(getDelta());
 
+        input.update();
         display.update();
 
     }
@@ -96,6 +96,6 @@ public class Game implements IDisplayHandler{
 
     public void close() { this.running = false; }
 
-    public void setActiveScene(Scene scene) { this.activeScene = scene; }
+    public void setActiveScene(IScene scene) { this.activeScene = scene; }
 
 }

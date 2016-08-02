@@ -1,92 +1,105 @@
 package matgm50.jrose.core.input;
 
-import org.joml.Vector2i;
-import org.lwjgl.BufferUtils;
-
-import java.nio.DoubleBuffer;
-import java.nio.IntBuffer;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.lwjgl.glfw.GLFW.*;
 
-public class Input {
+public class Input implements IInputHandler {
 
-    public static final String LEFT_MOUSE = "LMB";
-    public static final String MIDDLE_MOUSE = "MMB";
-    public static final String RIGHT_MOUSE = "RMB";
+    public static final class State {
 
-    private Map<String, InputState> inputStates = new HashMap<>();
-
-    public void init() {
-
-        registerInputState(new Mouse(LEFT_MOUSE, GLFW_MOUSE_BUTTON_LEFT));
-        registerInputState(new Mouse(MIDDLE_MOUSE, GLFW_MOUSE_BUTTON_MIDDLE));
-        registerInputState(new Mouse(RIGHT_MOUSE, GLFW_MOUSE_BUTTON_RIGHT));
+        public static final byte IGNORED = 0;
+        public static final byte PRESSED = 1;
+        public static final byte HELD = 2;
+        public static final byte RELEASED = 3;
 
     }
 
-    public void updateInputStates() {
+    private double mouseX, mouseY;
+    private int mouseScroll;
 
-        int action = 0;
+    private byte[] mice = new byte[GLFW_MOUSE_BUTTON_LAST + 1];
+    private byte[] keys = new byte[GLFW_KEY_LAST + 1];
 
-        for(InputState inputState : inputStates.values()) {
+    private boolean recording = false;
+    private String recoredText;
 
-            switch (inputState.getType()) {
+    public void update() {
 
-                case MOUSE:
-                    action = glfwGetMouseButton(glfwGetCurrentContext(), inputState.getCode());
-                    break;
-                case KEY:
-                    action = glfwGetKey(glfwGetCurrentContext(), inputState.getCode());
-                    break;
+        mouseScroll = 0;
+        updateStates(mice);
+        updateStates(keys);
 
-            }
+    }
 
-            getInputState(inputState.getName()).setState(getStateFromAction(inputState, action));
+    private void updateStates(byte[] states) {
+
+        for(int i = 0; i < states.length; i++) {
+
+            if(states[i] == State.PRESSED) { states[i] = State.HELD; }
+            if(states[i] == State.RELEASED) { states[i] = State.IGNORED; }
 
         }
 
     }
 
-    public InputState.State getStateFromAction(InputState state, int action) {
+    public boolean isKeyJustPressed(int key) { return keys[key] == State.PRESSED; }
 
-        switch (action) {
+    public boolean isKeyPressed(int key) { return isKeyJustPressed(key) || keys[key] == State.HELD; }
 
-            case GLFW_PRESS:
-                if (state.isIgnored() || state.isReleased()) { return InputState.State.PRESSED; }
-                if (state.isPressed() || state.isHeld()) { return InputState.State.HELD; }
-                break;
-            case GLFW_RELEASE:
-                if (state.isPressed() || state.isHeld()) { return InputState.State.RELEASED; }
-                if (state.isReleased()) { return InputState.State.IGNORED; }
-                break;
+    public boolean isKeyJustReleased(int key) { return keys[key] == State.RELEASED; }
 
-        }
+    public boolean isKeyReleased(int key) { return isKeyJustReleased(key) || keys[key] == State.IGNORED; }
 
-        return InputState.State.IGNORED;
+    public boolean isMouseJustPressed(int mouse) { return mice[mouse] == State.PRESSED; }
+
+    public boolean isMousePressed(int mouse) { return isMouseJustPressed(mouse) || mice[mouse] == State.HELD; }
+
+    public boolean isMouseJustReleased(int mouse) { return mice[mouse] == State.RELEASED; }
+
+    public boolean isMouseReleased(int mouse) { return isMouseJustReleased(mouse) || mice[mouse] == State.IGNORED; }
+
+    public double getMouseX() { return mouseX; }
+
+    public double getMouseY() { return mouseY; }
+
+    public int getMouseScroll() { return mouseScroll; }
+
+    public boolean isRecording() { return recording; }
+
+    public void startRecording() {
+
+        recording = true;
+        recoredText = "";
 
     }
 
-    public Vector2i getMousePos() {
+    public void stopRecording() { recording = false; }
 
-        DoubleBuffer x = BufferUtils.createDoubleBuffer(1);
-        DoubleBuffer y = BufferUtils.createDoubleBuffer(1);
-        IntBuffer h = BufferUtils.createIntBuffer(1);
+    public String getRecoredText() { return recoredText; }
 
-        glfwGetCursorPos(glfwGetCurrentContext(), x, y);
-        glfwGetFramebufferSize(glfwGetCurrentContext(), null, h);
+    @Override
+    public void onKeyPress(int key) { if(key != GLFW_KEY_UNKNOWN) { keys[key] = State.PRESSED; } }
 
-        return new Vector2i((int)x.get(), (h.get() - (int)y.get()));
+    @Override
+    public void onKeyRelease(int key) { if(key != GLFW_KEY_UNKNOWN) { keys[key] = State.RELEASED; } }
+
+    @Override
+    public void onMousePress(int mouse) { mice[mouse] = State.PRESSED; }
+
+    @Override
+    public void onMouseRelease(int mouse) { mice[mouse] = State.RELEASED; }
+
+    @Override
+    public void onMouseMove(double x, double y) {
+
+        mouseX = x;
+        mouseY = y;
 
     }
 
-    public Mouse getMouse(String name) { return (Mouse)getInputState(name); }
+    @Override
+    public void onMouseScroll(int scroll) { mouseScroll = scroll; }
 
-    public Key getKey(String name) { return (Key)getInputState(name); }
-
-    public InputState getInputState(String name) { return inputStates.get(name); }
-
-    public void registerInputState(InputState inputState) { inputStates.put(inputState.getName(), inputState); }
+    @Override
+    public void onUnicodeCharPress(char text) { if(recording) { recoredText += text; } }
 
 }
