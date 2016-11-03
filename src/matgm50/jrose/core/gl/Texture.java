@@ -1,6 +1,6 @@
 package matgm50.jrose.core.gl;
 
-import matgm50.jrose.core.res.Raw;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
@@ -13,12 +13,24 @@ public class Texture extends GLResource {
 
     private int textureID;
 
-    private final Raw raw;
+    private ByteBuffer image;
     private int width, height;
 
-    public Texture(Raw raw) {
+    public Texture(ByteBuffer image, int width, int height) {
 
-        this.raw = raw;
+        this.image = image;
+        this.width = width;
+        this.height = height;
+
+    }
+
+    public Texture(int id, int width, int height) {
+
+        this.textureID = id;
+        this.width = width;
+        this.height = height;
+        this.image = BufferUtils.createByteBuffer(1);
+        initialized = true;
 
     }
 
@@ -26,16 +38,6 @@ public class Texture extends GLResource {
     public void init() {
 
         if(initialized) { return; }
-
-        ByteBuffer image = raw.asByteBuffer();
-        IntBuffer w = BufferUtils.createIntBuffer(1);
-        IntBuffer h = BufferUtils.createIntBuffer(1);
-        IntBuffer c = BufferUtils.createIntBuffer(1);
-
-        ByteBuffer buffer = STBImage.stbi_load_from_memory(image, w, h, c, 4);
-
-        width = w.get();
-        height = h.get();
 
         textureID = GL11.glGenTextures();
 
@@ -45,11 +47,9 @@ public class Texture extends GLResource {
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA8, width, height, 0,
-                GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+                GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, image);
 
         GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
-
-        STBImage.stbi_image_free(buffer);
 
         initialized = true;
 
@@ -76,7 +76,8 @@ public class Texture extends GLResource {
 
         unbind();
 
-        raw.deinit();
+        //STBImage.stbi_image_free(image);
+
         GL11.glDeleteTextures(textureID);
 
         initialized = false;

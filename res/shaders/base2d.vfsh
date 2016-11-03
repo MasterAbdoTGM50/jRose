@@ -1,10 +1,10 @@
 <Vertex Shader>
-#version 150
+#version 330
 
 uniform mat4 mvp_mat;
 
-in vec2 position;
-in vec2 in_uv;
+layout(location = 0) in vec2 position;
+layout(location = 1) in vec2 in_uv;
 
 out vec2 uv;
 
@@ -17,7 +17,7 @@ void main() {
 <Vertex Shader>
 
 <Fragment Shader>
-#version 150
+#version 330
 
 uniform vec4 color;
 uniform bool tex_enabled = true;

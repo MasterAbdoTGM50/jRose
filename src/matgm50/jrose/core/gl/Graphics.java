@@ -1,6 +1,5 @@
 package matgm50.jrose.core.gl;
 
-import matgm50.jrose.core.gl.shader.Base2D;
 import matgm50.jrose.core.res.Resource;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
@@ -15,8 +14,7 @@ public class Graphics extends Resource {
     @Override
     public void init() {
 
-        Shaders.base2D.init();
-
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -37,11 +35,7 @@ public class Graphics extends Resource {
     }
 
     @Override
-    public void deinit() {
-
-        Shaders.base2D.deinit();
-
-    }
+    public void deinit() {}
 
     public static class Colors {
 
@@ -50,12 +44,6 @@ public class Graphics extends Resource {
         public static final Color RED = new Color(1.0f, 0.0f, 0.0f, 1.0f);
         public static final Color GREEN = new Color(0.0f, 1.0f, 0.0f, 1.0f);
         public static final Color BLUE = new Color(0.0f, 0.0f, 1.0f, 1.0f);
-
-    }
-
-    public static class Shaders {
-
-        public static Base2D base2D = new Base2D();
 
     }
 

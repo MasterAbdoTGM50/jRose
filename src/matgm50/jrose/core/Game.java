@@ -4,7 +4,6 @@ import matgm50.jrose.core.display.Display;
 import matgm50.jrose.core.display.IDisplayHandler;
 import matgm50.jrose.core.gl.Graphics;
 import matgm50.jrose.core.input.Input;
-import org.lwjgl.stb.STBImage;
 
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
@@ -49,7 +48,6 @@ public class Game implements IDisplayHandler{
         display.init();
         graphics.init();
         graphics.updateProjection(display.getWidth(), display.getHeight());
-        STBImage.stbi_set_flip_vertically_on_load(1);
 
         if (activeScene != null)
             activeScene.init();

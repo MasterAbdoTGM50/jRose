@@ -5,19 +5,13 @@ import org.lwjgl.BufferUtils;
 import java.io.*;
 import java.nio.ByteBuffer;
 
-public class Raw extends Resource {
+public class Raw {
 
     private final byte[] bytes;
 
     public Raw(InputStream stream) { this(streamToBytes(stream)); }
 
     public Raw(byte[] bytes) { this.bytes = bytes; }
-
-    @Override
-    public void init() { }
-
-    @Override
-    public void deinit() { }
 
     public byte[] asByteArray() { return this.bytes; }
 

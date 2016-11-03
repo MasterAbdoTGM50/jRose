@@ -44,8 +44,6 @@ public abstract class Mesh extends GLResource {
         if(!initialized) { return; }
 
         GL30.glBindVertexArray(vaoID);
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, verticesID);
-        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, indicesID);
 
     }
 
@@ -55,8 +53,6 @@ public abstract class Mesh extends GLResource {
         if(!initialized) { return; }
 
         GL30.glBindVertexArray(0);
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
 
     }
 
@@ -81,9 +77,8 @@ public abstract class Mesh extends GLResource {
         buffer.put(vertices).flip();
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
 
-        int posAtr = Graphics.Shaders.base2D.getAttribute("position");
-        GL20.glVertexAttribPointer(posAtr, 2, GL11.GL_FLOAT, false, 0, 0);
-        GL20.glEnableVertexAttribArray(posAtr);
+        GL20.glVertexAttribPointer(Shader.POSITION_LOC, 2, GL11.GL_FLOAT, false, 0, 0);
+        GL20.glEnableVertexAttribArray(Shader.POSITION_LOC);
 
     }
 
@@ -94,9 +89,8 @@ public abstract class Mesh extends GLResource {
         buffer.put(uvs).flip();
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
 
-        int uvAtr = Graphics.Shaders.base2D.getAttribute("in_uv");
-        GL20.glVertexAttribPointer(uvAtr, 2, GL11.GL_FLOAT, false, 0, 0);
-        GL20.glEnableVertexAttribArray(uvAtr);
+        GL20.glVertexAttribPointer(Shader.UV_LOC, 2, GL11.GL_FLOAT, false, 0, 0);
+        GL20.glEnableVertexAttribArray(Shader.UV_LOC);
 
     }
 
