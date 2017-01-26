@@ -19,7 +19,7 @@ public class TextureProvider extends ResourceProvider<Texture> {
         IntBuffer h = BufferUtils.createIntBuffer(1);
         IntBuffer c = BufferUtils.createIntBuffer(1);
 
-        STBImage.stbi_set_flip_vertically_on_load(1);
+        STBImage.stbi_set_flip_vertically_on_load(true);
         ByteBuffer image = STBImage.stbi_load_from_memory(buffer, w, h, c, 4);
 
         return new Texture(image, w.get(), h.get());
