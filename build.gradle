@@ -1,8 +1,8 @@
 project.ext.jRoseGroup = "matgm50.jrose"
 project.ext.jRoseVersion = "0.0.1"
 
-project.ext.lwjglVersion = "3.1.1"
-project.ext.jomlVersion = "1.9.2"
+project.ext.lwjglVersion = "3.1.2"
+project.ext.jomlVersion = "1.9.4"
 
 import org.gradle.internal.os.OperatingSystem
 
@@ -31,14 +31,6 @@ targetCompatibility = 1.8
 
 sourceSets.main.java.srcDirs = ["src"]
 sourceSets.main.resources.srcDirs = ["res"]
-
-jar {
-
-    exclude ("matgm50/jrose/demo/**")
-
-    exclude ("demo/**")
-
-}
 
 repositories {
 
